@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand */
+  --color-primary: #f3a53c;
+  --color-primary-dark: #dc8f26;
+  --color-primary-soft: #fdf1de;
+
+  /* Ink / neutrals */
+  --color-ink: #171923;
+  --color-ink-soft: #2b2e3d;
+  --color-surface: #faf9f7;
+  --color-card: #ffffff;
+  --color-border: #edece9;
+  --color-muted: #8b8d98;
+  --color-muted-soft: #f2f1ee;
+
+  /* Semantic */
+  --color-success: #1c9a5b;
+  --color-success-soft: #effee6;
+  --color-danger: #e8493f;
+  --color-danger-soft: #fef1ed;
+  --color-info: #3f6fd6;
+  --color-info-soft: #eaf0fd;
+  --color-violet: #7b6ee8;
+  --color-violet-soft: #efecfd;
+
+  /* Sidebar nav */
+  --color-nav-active-bg: #ffc305;
+  --color-nav-active-text: #34322c;
+  --color-nav-inactive-text: #4d4c48;
+
+  --radius-card: 1px;
+
+  --font-heading: "Lora", ui-serif, Georgia, serif;
+  --font-body: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme inline {
+  --color-primary: var(--color-primary);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-primary-soft: var(--color-primary-soft);
+
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-surface: var(--color-surface);
+  --color-card: var(--color-card);
+  --color-border: var(--color-border);
+  --color-muted: var(--color-muted);
+  --color-muted-soft: var(--color-muted-soft);
+
+  --color-success: var(--color-success);
+  --color-success-soft: var(--color-success-soft);
+  --color-danger: var(--color-danger);
+  --color-danger-soft: var(--color-danger-soft);
+  --color-info: var(--color-info);
+  --color-info-soft: var(--color-info-soft);
+  --color-violet: var(--color-violet);
+  --color-violet-soft: var(--color-violet-soft);
+
+  --color-nav-active-bg: var(--color-nav-active-bg);
+  --color-nav-active-text: var(--color-nav-active-text);
+  --color-nav-inactive-text: var(--color-nav-inactive-text);
+
+  --radius-card: var(--radius-card);
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-heading), ui-serif, Georgia, serif;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100%;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
