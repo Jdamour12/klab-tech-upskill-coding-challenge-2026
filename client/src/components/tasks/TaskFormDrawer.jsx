@@ -59,7 +59,12 @@ export function TaskFormDrawer({ open, onClose, mode, initial, onSubmit, isSubmi
 
       <div className="py-4">
         <Label>Title</Label>
-        <Input placeholder="e.g. Write project README" value={values.title} onChange={(e) => set('title', e.target.value)} />
+        <Input
+          placeholder="e.g. Write project README"
+          value={values.title}
+          onChange={(e) => set('title', e.target.value)}
+          maxLength={200}
+        />
         {fieldError && <p className="mt-1.5 text-[12px] text-danger">{fieldError}</p>}
       </div>
 
