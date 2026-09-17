@@ -18,7 +18,7 @@ async function register(req, res, next) {
     if (!name || typeof name !== 'string' || !name.trim()) {
       errors.push('name is required');
     }
-    if (!email || typeof email !== 'string' || !EMAIL_RE.test(email)) {
+    if (!email || typeof email !== 'string' || !EMAIL_RE.test(email.trim())) {
       errors.push('a valid email is required');
     }
     if (!password || typeof password !== 'string' || password.length < 6) {
@@ -28,7 +28,7 @@ async function register(req, res, next) {
       return res.status(400).json({ errors });
     }
 
-    const existing = await pool.query('SELECT id FROM users WHERE email = $1', [email.toLowerCase()]);
+    const existing = await pool.query('SELECT id FROM users WHERE email = $1', [email.trim().toLowerCase()]);
     if (existing.rows.length > 0) {
       return res.status(409).json({ error: 'An account with that email already exists' });
     }
@@ -36,7 +36,7 @@ async function register(req, res, next) {
     const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
     const result = await pool.query(
       'INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3) RETURNING id, name, email, created_at',
-      [name.trim(), email.toLowerCase(), passwordHash]
+      [name.trim(), email.trim().toLowerCase(), passwordHash]
     );
 
     const user = result.rows[0];
@@ -54,7 +54,7 @@ async function login(req, res, next) {
       return res.status(400).json({ error: 'email and password are required' });
     }
 
-    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email.toLowerCase()]);
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email.trim().toLowerCase()]);
     const user = result.rows[0];
     if (!user) {
       return res.status(401).json({ error: 'Invalid email or password' });
