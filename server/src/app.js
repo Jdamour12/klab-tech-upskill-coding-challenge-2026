@@ -8,7 +8,10 @@ const swaggerSpec = require('./swagger');
 
 const app = express();
 
-app.use(cors({ origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173' }));
+// CLIENT_ORIGIN may be a comma-separated list, so the deployed frontend and
+// a local dev server can both reach the API without swapping env vars.
+const allowedOrigins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173').split(',').map((o) => o.trim());
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
