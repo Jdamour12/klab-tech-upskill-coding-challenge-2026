@@ -126,6 +126,11 @@ async function updateTask(req, res, next) {
     }
 
     const current = existing.rows[0];
+    const updateFields = Object.keys(req.body);
+    if (current.status === 'Completed' && updateFields.some((field) => field !== 'status')) {
+      return res.status(400).json({ error: 'Completed tasks can only update status' });
+    }
+
     const {
       title = current.title,
       description = current.description,

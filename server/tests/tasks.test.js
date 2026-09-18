@@ -70,6 +70,31 @@ describe('task CRUD', () => {
     expect(res.body.status).toBe('Completed');
   });
 
+  it('only allows status updates after a task is completed', async () => {
+    const created = await auth(request(app).post('/tasks')).send({
+      title: 'Original',
+      description: 'Original details',
+      priority: 'High',
+    });
+    await auth(request(app).put(`/tasks/${created.body.id}`)).send({ status: 'Completed' });
+
+    const forbidden = await auth(request(app).put(`/tasks/${created.body.id}`)).send({
+      title: 'Changed',
+      description: 'Changed details',
+      priority: 'Low',
+    });
+    expect(forbidden.status).toBe(400);
+
+    const allowed = await auth(request(app).put(`/tasks/${created.body.id}`)).send({ status: 'Pending' });
+    expect(allowed.status).toBe(200);
+    expect(allowed.body).toMatchObject({
+      title: 'Original',
+      description: 'Original details',
+      priority: 'High',
+      status: 'Pending',
+    });
+  });
+
   it('returns 404 when updating a task that does not exist', async () => {
     const res = await auth(request(app).put('/tasks/999')).send({ title: 'Nope' });
     expect(res.status).toBe(404);
